@@ -1,0 +1,13 @@
+{% extends "orders/base.html" %}
+
+{% block title %}
+    Orders
+{% endblock %}
+
+{% block body %}
+    <h1>Orders</h1>
+
+    {% for pizza in regular_pizzas %}
+        <li>Pizza #{{ pizza.id }}: {{ pizza.name }} {{ pizza.price_small}} - {{ pizza.price_large }}</li>
+    {% endfor %}
+{% endblock %}
