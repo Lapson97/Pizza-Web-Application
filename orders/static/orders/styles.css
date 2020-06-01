@@ -1,0 +1,35 @@
+.top {
+    text-align: center;
+    font-size: 70px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #FBFBFB;
+    padding: 50px;
+}
+
+img {
+    position: absolute;
+    border-radius: 15px;
+    opacity: 0.65;
+    width: 95%;
+    z-index: -99;
+}
+
+.centered {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -40%);
+    color: white;
+    text-align: center;
+}
+
+.toptext {
+    position: absolute;
+    top: 35%;
+    left: 15%;
+    text-align: center;
+    color: white;
+    font-size: 25px;
+    width: 70%;
+    
+}

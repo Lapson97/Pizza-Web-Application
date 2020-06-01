@@ -5,9 +5,30 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Orders</h1>
-
-    {% for pizza in regular_pizzas %}
-        <li>Pizza #{{ pizza.id }}: {{ pizza.name }} {{ pizza.price_small}} - {{ pizza.price_large }}</li>
-    {% endfor %}
+<div class="toptext">
+    <p class="text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus lobortis lacus imperdiet erat euismod imperdiet. Quisque a tempus massa, et feugiat arcu. In vel augue lectus. Duis suscipit feugiat eleifend. Mauris risus tellus, dignissim in lectus sed, venenatis interdum magna. Sed auctor tempor ligula ut vulputate. Nunc ultricies suscipit arcu non tempus.
+        Pellentesque euismod turpis sed lacus pellentesque, eget volutpat urna vestibulum. Sed pulvinar egestas leo at faucibus. Cras non tellus et dui interdum pretium et vel est. Nam vel volutpat ligula, ac tempus ex. Fusce at convallis tortor, eget euismod lectus. Quisque tincidunt orci id eros posuere, vel eleifend metus pellentesque. Donec non nulla et tellus cursus ultricies. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vivamus et semper metus. Nulla facilisi. Praesent bibendum mauris nunc, ac lacinia nisi tempor eget. Ut faucibus vitae dui a aliquam. In ac nisl nec tortor feugiat tempor eget et libero. Ut augue tortor, dignissim vitae tempus non, ultrices at erat.</p>
+</div>
+<div style="color: white;" class="centered">
+    {% if message %}
+        <div class="alert alert-success" role="alert">
+            {{ message }}
+        </div>
+    {% endif %}
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="exampleInputLabel1" style="font-size: 20px;">Username</label>
+            <input type="text" class="form-control" id="exampleInputLabel1" placeholder="Enter username">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1" style="font-size: 20px;">Password</label>
+            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <div class='text-center m-2'>
+        No account yet? <a href="{% url 'register' %}">Sign In</a>
+    </div>
+</div>
 {% endblock %}
