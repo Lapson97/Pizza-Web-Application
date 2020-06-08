@@ -9,21 +9,35 @@
 
 {% block body %}
 {% include 'orders/status.html' %}
+<div class="collapse navbar-collapse" style="color: white; text-align: end; padding: 15px;" id="myNavbar">
+    <span><a href="{% url 'index' %}">BACK TO MAIN PAGE</a></span>
+</div>
 <div style="display: flex; justify-content: center; align-items: center;">
 <div class="row">
-	<div class="col-md-6">
+	<div class="col-md-10">
 		<div class="card card-body">
+			<h3 class="text-center" style="color: white; text-align: center;">TOPPINGS</h3>
 			<table class="table table-sm" style="color: white;">
 				<tr>
 					<th>Name</th>
+					<th></th>
 				</tr>
 
+				{% if Topping_count > 0 %}
 				{% for topping in toppings %}
 				<tr>
 					<td>{{topping.name}}</td>
-					<td><a class="btn btn-sm btn-info" href="#">Add</a></td>
+					<td><a class="btn btn-sm btn-info" href="{% url 'add' category topping.name Topping_price %}">Add</a></td>
 				</tr>
 				{% endfor %}
+				{% else %}
+				{% for topping in toppings %}
+				<tr>
+					<td>{{topping.name}}</td>
+					<td><a class="btn btn-sm btn-info disabled" href="{% url 'add' category topping.name Topping_price %}">Add</a></td>
+				</tr>
+				{% endfor %}
+				{% endif %}
 
 			</table>
 		</div>

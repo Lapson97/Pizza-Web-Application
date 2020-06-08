@@ -156,3 +156,10 @@ tr {
     color: #fff;
     margin-right: 20px;
 }
+
+.backButton {
+    background-color: white;
+    border-radius: 15px;
+    padding: 10px;
+}
+

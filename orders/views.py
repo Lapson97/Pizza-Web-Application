@@ -83,7 +83,7 @@ def pizza(request):
         "regular_pizzas": regular_pizzas,
         "sicilian_pizzas": sicilian_pizzas,
         "Order_number": order_number,
-        "Total":list(Order.objects.filter(user=request.user,number=order_number).aggregate(Sum('price')).values())[0] or 0,
+        "Total": list(Order.objects.filter(user=request.user,number=order_number).aggregate(Sum('price')).values())[0] or 0,
         "category1": "Regular Pizza",
         "category2": "Sicilian Pizza"
     }
@@ -97,7 +97,7 @@ def salad(request):
     order_number = UserOrder.objects.get(user=request.user, status='started').order_number
     context = {
         "salads": salads,
-        "category": "Salad",
+        "category": "Salads",
         "Order_number": order_number,
         "Total":list(Order.objects.filter(user=request.user,number=order_number).aggregate(Sum('price')).values())[0] or 0,
     }
@@ -127,7 +127,7 @@ def pasta(request):
         "pastas": pastas,
         "category": "Pasta",
         "Order_number": order_number,
-        "Total":list(Order.objects.filter(user=request.user,number=order_number).aggregate(Sum('price')).values())[0] or 0,
+        "Total": list(Order.objects.filter(user=request.user, number=order_number).aggregate(Sum('price')).values())[0] or 0,
     }
     return render(request, "orders/pastas.html", context)
 
@@ -150,12 +150,21 @@ def topping(request):
     if not request.user.is_authenticated:
         return render(request, "orders/login.html", {"message": None})
     toppings = Topping.objects.all()
-    return render(request, "orders/toppings.html", {"toppings": toppings})
+    order_number = UserOrder.objects.get(user=request.user, status='started').order_number
+    context = {
+        "toppings": toppings,
+        "category": "Toppings",
+        "Order_number": order_number,
+        "Total": list(Order.objects.filter(user=request.user,number=order_number).aggregate(Sum('price')).values())[0] or 0,
+        "Topping_price": 0.00,
+        "Topping_count": UserOrder.objects.get(user=request.user,status='started').topping_possibility
+    }
+    return render(request, "orders/toppings.html", context)
 
 
 def add(request, category, name, price):
-    order_number = UserOrder.objects.get(user=request.user,status='started').order_number
-    topping_allowance = UserOrder.objects.get(user=request.user,status='started')
+    order_number = UserOrder.objects.get(user=request.user, status='started').order_number
+    topping_allowance = UserOrder.objects.get(user=request.user, status='started')
 
     context = {
         "Checkout":Order.objects.filter(user=request.user,number=order_number),
@@ -170,33 +179,33 @@ def add(request, category, name, price):
 
     if (category == 'Regular Pizza' or category == 'Sicilian Pizza'):
         if name == "1 topping":
-            topping_allowance.topping_possibility+=1
+            topping_allowance.topping_possibility += 1
             topping_allowance.save()
         if name == "2 toppings":
-            topping_allowance.topping_possibility+=2
+            topping_allowance.topping_possibility += 2
             topping_allowance.save()
         if name == "3 toppings":
-            topping_allowance.topping_possibility+=3    
+            topping_allowance.topping_possibility += 3    
             topping_allowance.save()
 
     if category == "Toppings" and topping_allowance.topping_possibility == 0:
         return render(request,"index.html", context) 
     if category == "Toppings" and topping_allowance.topping_possibility > 0:
-        topping_allowance.topping_allowance-=1
+        topping_allowance.topping_possibility -= 1
         topping_allowance.save()
 
     add = Order(user=request.user, number=order_number, category=category, name=name, price=price)
     add.save()
 
     context2 = {
-        "Checkout":Order.objects.filter(user=request.user,number=order_number),
-        "Checkout_category":Order.objects.filter(user=request.user,number=order_number).values_list('category').distinct(),
-        "Total":list(Order.objects.filter(user=request.user,number=order_number).aggregate(Sum('price')).values())[0] or 0,
-        "user":request.user,
+        "Checkout": Order.objects.filter(user=request.user,number=order_number),
+        "Checkout_category": Order.objects.filter(user=request.user,number=order_number).values_list('category').distinct(),
+        "Total": list(Order.objects.filter(user=request.user,number=order_number).aggregate(Sum('price')).values())[0] or 0,
+        "user": request.user,
         "Category": Category.objects.all(),
-        "Active_category":category,
+        "Active_category": category,
         "Topping_price": 0.00,
-        "Order_number":order_number
+        "Order_number": order_number
     }       
     return render(request, "orders/index.html", context2) 
 
@@ -204,38 +213,43 @@ def add(request, category, name, price):
 def delete(request, category, name, price):
     order_number = UserOrder.objects.get(user=request.user, status='started').order_number
     topping_allowance=UserOrder.objects.get(user=request.user,status='started')
+
     if (category == 'Regular Pizza' or category == 'Sicilian Pizza'):
-        if name =="1 topping":
-            topping_allowance.topping_possibility-=1
+        if name == "1 topping":
+            topping_allowance.topping_possibility -= 1
             topping_allowance.save()
-        if name =="2 toppings":
-            topping_allowance.topping_possibility-=2
+        if name == "2 toppings":
+            topping_allowance.topping_possibility -= 2
             topping_allowance.save()
-        if name =="3 toppings":
-            topping_allowance.topping_possibility-=3    
+        if name == "3 toppings":
+            topping_allowance.topping_possibility -= 3    
             topping_allowance.save()
-        topping_allowance.topping_possibility=0
+
+        topping_allowance.topping_possibility = 0
         topping_allowance.save()
-        delete_all_toppings=Order.objects.filter(user=request.user,category="Toppings")
+
+        delete_all_toppings = Order.objects.filter(user=request.user, category="Toppings")
         delete_all_toppings.delete()
+
     if category == "Toppings":
         topping_allowance.topping_possibility+=1
         topping_allowance.save()
 
     
-    find_order=Order.objects.filter(user=request.user,category=category,name=name,price=price)[0]
-    find_order.delete()                
+    find_order = Order.objects.filter(user=request.user, category=category, name=name, price=price)[0]
+    find_order.delete()       
+
     context = {
-        "Checkout":Order.objects.filter(user=request.user,number=order_number),
-        "Checkout_category":Order.objects.filter(user=request.user,number=order_number).values_list('category').distinct(),
-        "Total":list(Order.objects.filter(user=request.user,number=order_number).aggregate(Sum('price')).values())[0],
-        "user":request.user,
+        "Checkout": Order.objects.filter(user=request.user,number=order_number),
+        "Checkout_category": Order.objects.filter(user=request.user,number=order_number).values_list('category').distinct(),
+        "Total": list(Order.objects.filter(user=request.user,number=order_number).aggregate(Sum('price')).values())[0],
+        "user": request.user,
         "Category": Category.objects.all(),
-        "Active_category":category,
+        "Active_category": category,
         "Topping_price": 0.00,
-        "Order_number":order_number,
+        "Order_number": order_number,
         "orders": Order.objects.filter(user=request.user),
-        "Total":list(Order.objects.filter(user=request.user,number=order_number).aggregate(Sum('price')).values())[0] or 0
+        "Total": list(Order.objects.filter(user=request.user,number=order_number).aggregate(Sum('price')).values())[0] or 0
     }
     return render(request,"orders/my_orders.html", context)
 
@@ -243,7 +257,10 @@ def delete(request, category, name, price):
 
 def my_orders(request):
     orders = Order.objects.filter(user=request.user)
+    order_number = UserOrder.objects.get(user=request.user, status='started').order_number
     context = {
-        "orders": orders
+        "Order_number": order_number,
+        "orders": orders,
+        "Total": list(Order.objects.filter(user=request.user,number=order_number).aggregate(Sum('price')).values())[0] or 0
     }
     return render(request, "orders/my_orders.html", context)

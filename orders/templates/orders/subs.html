@@ -9,9 +9,14 @@
 
 {% block body %}
 {% include 'orders/status.html' %}
+
+<div class="collapse navbar-collapse" style="color: white; text-align: end; padding: 15px;" id="myNavbar">
+    <span><a href="{% url 'index' %}">BACK TO MAIN PAGE</a></span>
+</div>
+
 <div style="display: flex; justify-content: center; align-items: center;">
 <div class="row">
-	<div class="col-md-6">
+	<div class="col-md-10">
 		<div class="card card-body">
             <h3 class="text-center" style="color: white; text-align: center;">SUBS</h3>
             <table class="table table-sm" style="color: white;">
@@ -19,7 +24,8 @@
 					<th>Name</th>
                     <th>Price (Small)</th>
                     <th></th>
-                    <th>Price (Large)</th>
+					<th>Price (Large)</th>
+					<th></th>
 				</tr>
 
 				{% for sub in subs %}

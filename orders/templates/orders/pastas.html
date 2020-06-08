@@ -9,19 +9,29 @@
 {% block body %}
 
 {% include 'orders/status.html' %}
+
+<div class="collapse navbar-collapse" style="color: white; text-align: end; padding: 15px;" id="myNavbar">
+    <span><a  href="{% url 'index' %}">BACK TO MAIN PAGE</a></span>
+</div>
+
 <div style="display: flex; justify-content: center; align-items: center;">
 <div class="row">
-	<div class="col-md-6">
+	<div class="col-md-10">
 		<div class="card card-body">
 			<table class="table table-sm" style="color: white;">
 				<tr>
 					<th>Name</th>
-					<th>Price<th>
+                    <th>Price (Small)</th>
+                    <th></th>
+					<th>Price (Large)</th>
+					<th></th>
 				</tr>
 
 				{% for pasta in pastas %}
 				<tr>
 					<td>{{pasta.name}}</td>
+                    <td>${{ pasta.price }}</td>
+                    <td><a class="btn btn-sm btn-info" href="{% url 'add' category pasta.name pasta.price %}">Add</a></td>
 					<td>${{ pasta.price }}</td>
 					<td><a class="btn btn-sm btn-info" href="{% url 'add' category pasta.name pasta.price %}">Add</a></td>
 				</tr>
