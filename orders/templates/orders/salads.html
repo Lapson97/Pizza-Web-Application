@@ -23,7 +23,7 @@
 				<tr>
 					<td>{{salad.name}}</td>
 					<td>${{ salad.price }}</td>
-					<td><a class="btn btn-sm btn-info" href="#">Add</a></td>
+					<td><a class="btn btn-sm btn-info" href="{% url 'add' category salad.name salad.price %}">Add</a></td>
 				</tr>
 				{% endfor %}
 

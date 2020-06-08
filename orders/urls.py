@@ -13,5 +13,7 @@ urlpatterns = [
     path("pasta/", views.pasta, name="pasta"),
     path("sub/", views.sub, name="sub"),
     path("topping/", views.topping, name="topping"),
-    path("add/<str:category>/<str:name>/<str:price>", views.add, name="add")
+    path("add/<str:category>/<str:name>/<str:price>", views.add, name="add"),
+    path("delete/<str:category>/<str:name>/<str:price>", views.delete, name="delete"),
+    path("my_orders", views.my_orders, name="my_orders")
 ]

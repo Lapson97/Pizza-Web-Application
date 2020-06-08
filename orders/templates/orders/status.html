@@ -2,5 +2,5 @@
 <div class="collapse navbar-collapse" style="color: white; text-align: end; padding: 15px;" id="myNavbar">
     <span class="hello-msg">Hello, {{user}} | Order number: {{Order_number}} | TOTAL: ${{Total|floatformat:2}}</span>
     <br>
-    <span><a href="#">CHECKOUT</a></span>
+    <span><a href="{% url 'my_orders' %}">CHECKOUT</a></span>
   </div>

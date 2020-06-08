@@ -53,9 +53,9 @@ s
 				<tr>
 					<td>{{pizza.name}}</td>
                     <td>${{ pizza.price_small }}</td>
-                    <td><a class="btn btn-sm btn-info" href="{% url 'add' category1 pizza.name pizza.price_small %}">Add</a></td>
+                    <td><a class="btn btn-sm btn-info" href="{% url 'add' category2 pizza.name pizza.price_small %}">Add</a></td>
 					<td>${{ pizza.price_large }}</td>
-					<td><a class="btn btn-sm btn-info" href="{% url 'add' category1 pizza.name pizza.price_large %}">Add</a></td>
+					<td><a class="btn btn-sm btn-info" href="{% url 'add' category2 pizza.name pizza.price_large %}">Add</a></td>
 				</tr>
 				{% endfor %}
 

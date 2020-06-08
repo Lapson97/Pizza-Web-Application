@@ -1,0 +1,42 @@
+{% extends "orders/base.html" %}
+
+{% load static %}
+{% block title %}
+    Sub
+{% endblock %}
+
+
+
+{% block body %}
+{% include 'orders/status.html' %}
+<div style="display: flex; justify-content: center; align-items: center;">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card card-body">
+                <h3 class="text-center" style="color: white; text-align: center;"></h3>
+                <table class="table table-sm" style="color: white;">
+                    <tr>
+                        <th>Number</th>
+                        <th>Category</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th></th>
+                    </tr>
+                    {% for order in orders %}
+                    
+                    <tr>
+                        <td>{{order.number}}</td>
+                        <td>{{order.category}}</td>
+                        <td>{{order.name}}</td>
+                        <td>{{order.price}}</td>
+                        <td><a class="btn btn-sm btn-warning" href="{% url 'delete' order.category order.name order.price %}">Delete</a></td>
+                    </tr>
+                    {% endfor %}
+    
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

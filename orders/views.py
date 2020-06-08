@@ -199,3 +199,51 @@ def add(request, category, name, price):
         "Order_number":order_number
     }       
     return render(request, "orders/index.html", context2) 
+
+
+def delete(request, category, name, price):
+    order_number = UserOrder.objects.get(user=request.user, status='started').order_number
+    topping_allowance=UserOrder.objects.get(user=request.user,status='started')
+    if (category == 'Regular Pizza' or category == 'Sicilian Pizza'):
+        if name =="1 topping":
+            topping_allowance.topping_possibility-=1
+            topping_allowance.save()
+        if name =="2 toppings":
+            topping_allowance.topping_possibility-=2
+            topping_allowance.save()
+        if name =="3 toppings":
+            topping_allowance.topping_possibility-=3    
+            topping_allowance.save()
+        topping_allowance.topping_possibility=0
+        topping_allowance.save()
+        delete_all_toppings=Order.objects.filter(user=request.user,category="Toppings")
+        delete_all_toppings.delete()
+    if category == "Toppings":
+        topping_allowance.topping_possibility+=1
+        topping_allowance.save()
+
+    
+    find_order=Order.objects.filter(user=request.user,category=category,name=name,price=price)[0]
+    find_order.delete()                
+    context = {
+        "Checkout":Order.objects.filter(user=request.user,number=order_number),
+        "Checkout_category":Order.objects.filter(user=request.user,number=order_number).values_list('category').distinct(),
+        "Total":list(Order.objects.filter(user=request.user,number=order_number).aggregate(Sum('price')).values())[0],
+        "user":request.user,
+        "Category": Category.objects.all(),
+        "Active_category":category,
+        "Topping_price": 0.00,
+        "Order_number":order_number,
+        "orders": Order.objects.filter(user=request.user),
+        "Total":list(Order.objects.filter(user=request.user,number=order_number).aggregate(Sum('price')).values())[0] or 0
+    }
+    return render(request,"orders/my_orders.html", context)
+
+
+
+def my_orders(request):
+    orders = Order.objects.filter(user=request.user)
+    context = {
+        "orders": orders
+    }
+    return render(request, "orders/my_orders.html", context)

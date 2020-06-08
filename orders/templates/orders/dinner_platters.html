@@ -28,7 +28,7 @@
                     <td>${{ dinner_platter.price_small }}</td>
                     <td><a class="btn btn-sm btn-info" href="{% url 'add' category dinner_platter.name dinner_platter.price_small %}">Add</a></td>
 					<td>${{ dinner_platter.price_large }}</td>
-					<td><a class="btn btn-sm btn-info" href="{% url 'add' category dinner_platter.name sub.dinner_platter %}">Add</a></td>
+					<td><a class="btn btn-sm btn-info" href="{% url 'add' category dinner_platter.name dinner_platter.price_large %}">Add</a></td>
 				</tr>
 				{% endfor %}
 
