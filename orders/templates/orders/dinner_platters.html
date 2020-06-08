@@ -1,0 +1,41 @@
+{% extends "orders/base.html" %}
+
+{% load static %}
+{% block title %}
+    Pizza
+{% endblock %}
+
+
+
+{% block body %}
+{% include 'orders/status.html' %}
+<div style="display: flex; justify-content: center; align-items: center;">
+<div class="row">
+	<div class="col-md-6">
+		<div class="card card-body">
+            <h3 class="text-center" style="color: white; text-align: center;">DINNER PLATTERS</h3>
+            <table class="table table-sm" style="color: white;">
+				<tr>
+					<th>Name</th>
+                    <th>Price (Small)</th>
+                    <th></th>
+                    <th>Price (Large)</th>
+				</tr>
+
+				{% for dinner_platter in dinner_platters %}
+				<tr>
+					<td>{{dinner_platter.name}}</td>
+                    <td>${{ dinner_platter.price_small }}</td>
+                    <td><a class="btn btn-sm btn-info" href="{% url 'add' category dinner_platter.name dinner_platter.price_small %}">Add</a></td>
+					<td>${{ dinner_platter.price_large }}</td>
+					<td><a class="btn btn-sm btn-info" href="{% url 'add' category dinner_platter.name sub.dinner_platter %}">Add</a></td>
+				</tr>
+				{% endfor %}
+
+			</table>
+		</div>
+	</div>
+</div>
+</div>
+
+{% endblock %}

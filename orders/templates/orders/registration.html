@@ -5,42 +5,22 @@
 {% endblock %}
 
 {% block body %}
-<div class='centered'>
-    <div class="alert alert-primary" role="alert">
-        <p class="text-center" style="font-size: 40px; letter-spacing: 3px;">SIGN IN</p>
-    </div>
+<div class="login">
+    <h1>CREATE AN ACCOUNT</h1>
     {% if message %}
-        <div class="alert alert-danger" role="alert">
-            {{ message }}
+        <div>
+            <p class="error">{{ message }}</p>
         </div>
     {% endif %}
-    <form class='m-5' action="{% url 'register' %}" method="POST">
+    <form method="POST" action="{% url 'register' %}">
         {% csrf_token %}
-        <div class="form-group">
-            <label for="username">First name:</label>
-            <input type="text" class="form-control" name="first_name">
-        </div>
-        <div class="form-group">
-            <label for="username">Last name:</label>
-            <input type="text" class="form-control" name="last_name">
-        </div>
-        <div class="form-group">
-            <label for="username">Username:</label>
-            <input type="text" class="form-control" name="username">
-        </div>
-        <div class="form-group">
-            <label for="email">Email address:</label>
-            <input type="email" class="form-control" name="email">
-        </div>
-        <div class="form-group">
-            <label for="pwd">Password:</label>
-            <input type="password" class="form-control" name="password1">
-        </div>
-        <div class="form-group">
-            <label for="pwd">Retype Password:</label>
-            <input type="password" class="form-control" name="password2">
-        </div>
-        <button type="submit" class="btn btn-primary">Sign In</button>
+        <input type="text" name="first_name" placeholder="First name" required="required" style="color: #FFFFFF;" />
+        <input type="text" name="last_name" placeholder="Last name" required="required" style="color: #FFFFFF;" />
+        <input type="text" name="username" placeholder="Username" required="required" style="color: #FFFFFF;" />
+        <input type="email" name="email" placeholder="E-mail" required="required" style="color: #FFFFFF;" />
+        <input type="password" name="password1" placeholder="Password" required="required" style="color: #FFFFFF;"/>
+        <input type="password" name="password2" placeholder="Retype password" required="required" style="color: #FFFFFF;"/>
+        <button type="submit" class="btn btn-primary btn-block btn-large">Sign in.</button>
     </form>
 </div>
 {% endblock %}

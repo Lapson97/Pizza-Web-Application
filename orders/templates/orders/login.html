@@ -1,0 +1,38 @@
+{% extends "orders/base.html" %}
+
+{% load static %}
+{% block title %}
+    Orders
+{% endblock %}
+
+{% block body %}
+<div class="login">
+    <h1>LOGIN</h1>
+    {% if invalid %}
+        <div>
+            <p class="error">{{ invalid }}</p>
+        </div>
+    {% endif %}
+
+    {% if logout %}
+        <div>
+            <p class="logout">{{ logout }}</p>
+        </div>
+    {% endif %}
+
+    {% if message %}
+    <div>
+        <p class="logout">{{ message }}</p>
+    </div>
+    {% endif %}
+    <form method="POST" action="{% url 'login' %}">
+        {% csrf_token %}
+    	<input type="text" name="username" placeholder="Username" required="required" style="color: #FFFFFF;" />
+        <input type="password" name="password" placeholder="Password" required="required" style="color: #FFFFFF;"/>
+        <button type="submit" class="btn btn-primary btn-block btn-large">Let me in.</button>
+    </form>
+    <div>
+        <p class="register">No account yet? <a href="{% url 'register' %}">Sign in.</a></p>
+    </div>
+</div>
+{% endblock %}

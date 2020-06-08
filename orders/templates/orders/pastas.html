@@ -1,0 +1,36 @@
+{% extends "orders/base.html" %}
+
+{% load static %}
+{% block title %}
+    Pasta
+{% endblock %}
+
+
+{% block body %}
+
+{% include 'orders/status.html' %}
+<div style="display: flex; justify-content: center; align-items: center;">
+<div class="row">
+	<div class="col-md-6">
+		<div class="card card-body">
+			<table class="table table-sm" style="color: white;">
+				<tr>
+					<th>Name</th>
+					<th>Price<th>
+				</tr>
+
+				{% for pasta in pastas %}
+				<tr>
+					<td>{{pasta.name}}</td>
+					<td>${{ pasta.price }}</td>
+					<td><a class="btn btn-sm btn-info" href="{% url 'add' category pasta.name pasta.price %}">Add</a></td>
+				</tr>
+				{% endfor %}
+
+			</table>
+		</div>
+	</div>
+</div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends "orders/base.html" %}
+
+{% load static %}
+{% block title %}
+    Pizza
+{% endblock %}
+s
+
+{% block body %}
+{% include 'orders/status.html' %}
+<div style="display: flex; justify-content: center; align-items: center;">
+<div class="row">
+	<div class="col-md-6">
+		<div class="card card-body">
+            <h3 class="text-center" style="color: white; text-align: center;">REGULAR PIZZA</h3>
+            <table class="table table-sm" style="color: white;">
+				<tr>
+					<th>Name</th>
+                    <th>Price (Small)</th>
+                    <th></th>
+                    <th>Price (Large)</th>
+				</tr>
+
+				{% for pizza in regular_pizzas %}
+				<tr>
+					<td>{{pizza.name}}</td>
+                    <td>${{ pizza.price_small }}</td>
+                    <td><a class="btn btn-sm btn-info" href="{% url 'add' category1 pizza.name pizza.price_small %}">Add</a></td>
+					<td>${{ pizza.price_large }}</td>
+					<td><a class="btn btn-sm btn-info" href="{% url 'add' category1 pizza.name pizza.price_large %}">Add</a></td>
+				</tr>
+				{% endfor %}
+
+			</table>
+		</div>
+	</div>
+</div>
+</div>
+<div style="display: flex; justify-content: center; align-items: center;">
+<div class="row">
+	<div class="col-md-6">
+		<div class="card card-body">
+            <h3 class="text-center" style="color: white; text-align: center;">SICILIAN PIZZA</h3>
+            <table class="table table-sm" style="color: white;">
+				<tr>
+					<th>Name</th>
+                    <th>Price (Small)</th>
+                    <th></th>
+                    <th>Price (Large)</th>
+				</tr>
+
+				{% for pizza in sicilian_pizzas %}
+				<tr>
+					<td>{{pizza.name}}</td>
+                    <td>${{ pizza.price_small }}</td>
+                    <td><a class="btn btn-sm btn-info" href="{% url 'add' category1 pizza.name pizza.price_small %}">Add</a></td>
+					<td>${{ pizza.price_large }}</td>
+					<td><a class="btn btn-sm btn-info" href="{% url 'add' category1 pizza.name pizza.price_large %}">Add</a></td>
+				</tr>
+				{% endfor %}
+
+			</table>
+		</div>
+	</div>
+</div>
+</div>
+
+{% endblock %}
